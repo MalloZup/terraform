@@ -182,15 +182,15 @@ func TestApply_parallelism(t *testing.T) {
 		provider := &terraform.MockProvider{}
 		provider.GetSchemaReturn = &terraform.ProviderSchema{
 			ResourceTypes: map[string]*configschema.Block{
-				name+"_instance": {},
+				name + "_instance": {},
 			},
 		}
-		provider.PlanResourceChangeFn = func (req providers.PlanResourceChangeRequest) providers.PlanResourceChangeResponse {
+		provider.PlanResourceChangeFn = func(req providers.PlanResourceChangeRequest) providers.PlanResourceChangeResponse {
 			return providers.PlanResourceChangeResponse{
 				PlannedState: req.ProposedNewState,
 			}
 		}
-		provider.ApplyResourceChangeFn = func (req providers.ApplyResourceChangeRequest) providers.ApplyResourceChangeResponse {
+		provider.ApplyResourceChangeFn = func(req providers.ApplyResourceChangeRequest) providers.ApplyResourceChangeResponse {
 			// Increment so we're counting parallelism
 			started <- 1
 			runCount.Inc()
@@ -1494,12 +1494,12 @@ func applyFixtureSchema() *terraform.ProviderSchema {
 func applyFixtureProvider() *terraform.MockProvider {
 	p := testProvider()
 	p.GetSchemaReturn = applyFixtureSchema()
-	p.PlanResourceChangeFn = func (req providers.PlanResourceChangeRequest) providers.PlanResourceChangeResponse {
+	p.PlanResourceChangeFn = func(req providers.PlanResourceChangeRequest) providers.PlanResourceChangeResponse {
 		return providers.PlanResourceChangeResponse{
 			PlannedState: req.ProposedNewState,
 		}
 	}
-	p.ApplyResourceChangeFn = func (req providers.ApplyResourceChangeRequest) providers.ApplyResourceChangeResponse {
+	p.ApplyResourceChangeFn = func(req providers.ApplyResourceChangeRequest) providers.ApplyResourceChangeResponse {
 		return providers.ApplyResourceChangeResponse{
 			NewState: req.PlannedState,
 		}
