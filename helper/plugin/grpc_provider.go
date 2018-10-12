@@ -514,6 +514,7 @@ func (s *GRPCProviderServer) ApplyResourceChange(_ context.Context, req *proto.A
 	newInstanceState, err := s.provider.Apply(info, priorState, diff)
 	if err != nil {
 		log.Printf("[DEBUG] GRPCProviderServer.ApplyResourceChange -> Apply: %#v", err)
+		log.Printf("[DEBUG] s.provider: %T", s.provider)
 		resp.Diagnostics = convert.AppendProtoDiag(resp.Diagnostics, err)
 		return resp, nil
 	}
