@@ -3,6 +3,7 @@ package plugin
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"strconv"
 
 	"github.com/zclconf/go-cty/cty"
@@ -512,6 +513,7 @@ func (s *GRPCProviderServer) ApplyResourceChange(_ context.Context, req *proto.A
 
 	newInstanceState, err := s.provider.Apply(info, priorState, diff)
 	if err != nil {
+		log.Printf("[DEBUG] GRPCProviderServer.ApplyResourceChange -> Apply: %#v", err)
 		resp.Diagnostics = convert.AppendProtoDiag(resp.Diagnostics, err)
 		return resp, nil
 	}
